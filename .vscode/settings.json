@@ -1,0 +1,16 @@
+{
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSave": true,
+	"editor.wordWrap": "on",
+	"editor.wordWrapColumn": 70,
+	"editor.lineHeight": 30,
+	"editor.mouseWheelZoom": true,
+	"editor.fontLigatures": true,
+	"terminal.integrated.sendKeybindingsToShell": true,
+	"terminal.integrated.enableMultiLinePasteWarning": "never",
+	"terminal.integrated.suggest.enabled": true,
+	"terminal.integrated.suggest.runOnEnter": "always",
+	"terminal.integrated.suggest.inlineSuggestion": "alwaysOnTopExceptExactMatch",
+	"workbench.colorTheme": "Gruvbox Dark Hard",
+	"workbench.iconTheme": "gruvbox-material-icon-theme"
+}
