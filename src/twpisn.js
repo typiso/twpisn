@@ -36,7 +36,7 @@ document.querySelectorAll("button").forEach((a) => {
 		});
 		a.addEventListener("mousedown", () => {
 			a.style.backgroundImage = "linear-gradient(#C5C7CB, #D0D2D6)";
-			bor.style.outline = "1px dashed black";
+			bor.style.outline = "1px dotted black";
 		});
 		a.addEventListener("mouseup", () => {
 			a.style.backgroundImage = "none";
