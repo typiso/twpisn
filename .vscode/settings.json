@@ -2,7 +2,7 @@
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.formatOnSave": true,
 	"editor.wordWrap": "on",
-	"editor.wordWrapColumn": 70,
+	"editor.wordWrapColumn": 200,
 	"editor.lineHeight": 30,
 	"editor.mouseWheelZoom": true,
 	"editor.fontLigatures": true,

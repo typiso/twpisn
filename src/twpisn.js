@@ -7,43 +7,122 @@ for (var i = 0; i < elms.length; i++) {
 	}
 }
 
-var prim = "#6C94BB";
-var darkPrim = "#678DB2";
+var ptnColors = {
+	prim: {
+		bright: "#9AB9D8",
+		dark: "#6C94BB",
+		darker: "#678DB2",
+	},
+	seco: {
+		bright: "#E3E5EB",
+		dark: "#C9CBD0",
+	},
+	back: {
+		bright: "#efefef",
+	},
+};
+
+var ptnSizes = {
+	primPadding: {
+		tb: 5,
+		lr: 4,
+	},
+};
 
 document.querySelectorAll("button").forEach((a) => {
+	let applyStyle = (element, styleObj) => {
+		Object.assign(element.style, styleObj);
+	};
+	var text = a.innerHTML;
+	a.innerHTML = "<div><span>" + text + "</span></div>";
+	var bor = a.querySelector("span");
+	var cont = a.querySelector("div");
+	const normalStyleA = {
+		borderColor: "#8F8F8F",
+		outlineColor: "rgba(255, 255, 255, 0.4)",
+	};
+	const filledStyleA = {
+		borderColor: "#366088",
+		outlineColor: "rgba(0, 0, 0, 0.1)",
+	};
+	const normalStyle = {
+		backgroundImage: `linear-gradient(${ptnColors.seco.bright}, ${ptnColors.seco.dark})`,
+		color: "#000000",
+	};
+	const normalStyleHover = {
+		backgroundImage: "none",
+		backgroundColor: ptnColors.back.bright,
+	};
+	const filledStyle = {
+		color: "#ffffff",
+		backgroundImage: `linear-gradient(${ptnColors.prim.bright}, ${ptnColors.prim.dark})`,
+	};
+	const filledStyleHover = {
+		backgroundImage: "none",
+		backgroundColor: ptnColors.prim.bright,
+	};
+	const normalStyleActive = {
+		backgroundImage: `linear-gradient(${ptnColors.seco.bright}, ${ptnColors.seco.dark})`,
+	};
+	const filledStyleActive = {
+		backgroundImage: "none",
+		backgroundColor: ptnColors.prim.darker,
+	};
 	if (a.hasAttribute("tpn-btn")) {
-		var text = a.innerHTML;
-		a.innerHTML = "<span>" + text + "</span>";
-		var bor = a.querySelector("span");
 		bor.style.padding = "0 2px";
-		bor.style.lineHeight = 0.7;
-		a.style.color = "#000000";
+		cont.style.padding = `${ptnSizes.primPadding.tb - 2}px ${
+			ptnSizes.primPadding.lr
+		}px`;
 		a.style.cursor = "pointer";
-		a.style.backgroundImage = "linear-gradient(#E3E5EB, #C9CBD0)";
-		a.style.padding = "3px 4px";
+		a.style.backgroundColor = "transparent";
+		a.style.backgroundRepeat = "repeat";
+		a.style.overflow = "hidden";
 		a.style.borderRadius = "3px";
-		a.style.border = "1px solid #8F8F8F";
 		a.style.fontWeight = 400;
 		a.style.minWidth = "60px";
-		a.style.boxShadow =
-			"0.5px 0.5px 0.5px 0 rgba(0, 0, 0, 0.25), inset 0 0 1px 1px rgba(255, 255, 255, 0.3)";
+		a.style.boxShadow = "0.5px 0.5px 0.5px 0 rgba(0, 0, 0, 0.25)";
+		a.style.border = "1px solid";
+		a.style.outline = "1px solid";
+		a.style.outlineOffset = "-2px";
+		a.style.height = "fit-content";
+		applyStyle(cont, normalStyle);
+		applyStyle(a, normalStyleA);
 		a.addEventListener("mouseover", () => {
-			a.style.backgroundImage = "none";
-			a.style.backgroundColor = "#efefef";
+			applyStyle(cont, normalStyleHover);
 		});
 		a.addEventListener("mouseleave", () => {
-			a.style.backgroundImage = "linear-gradient(#E3E5EB, #C9CBD0)";
+			applyStyle(cont, normalStyle);
 		});
 		a.addEventListener("mousedown", () => {
-			a.style.backgroundImage = "linear-gradient(#C5C7CB, #D0D2D6)";
+			applyStyle(cont, normalStyleActive);
 			bor.style.outline = "1px dotted black";
 		});
 		a.addEventListener("mouseup", () => {
-			a.style.backgroundImage = "none";
-			a.style.backgroundColor = "#efefef";
+			applyStyle(cont, normalStyleHover);
 		});
 		a.addEventListener("blur", () => {
 			bor.style.outline = "none";
 		});
+	}
+	if (a.hasAttribute("filled-btn")) {
+		applyStyle(cont, filledStyle);
+		applyStyle(a, filledStyleA);
+		a.addEventListener("mouseover", () => {
+			applyStyle(cont, filledStyleHover);
+		});
+		a.addEventListener("mouseleave", () => {
+			applyStyle(cont, filledStyle);
+		});
+		a.addEventListener("mousedown", () => {
+			applyStyle(cont, filledStyleActive);
+		});
+		a.addEventListener("mouseup", () => {
+			applyStyle(cont, filledStyleHover);
+		});
+	}
+	if (a.hasAttribute("tiny-btn")) {
+		cont.style.padding = 0;
+		cont.style.padding = `0 ${ptnSizes.primPadding.lr}px`;
+		a.style.fontSize = "10pt";
 	}
 });

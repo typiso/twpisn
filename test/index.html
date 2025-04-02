@@ -13,20 +13,30 @@
 					"Segoe UI Emoji", "Segoe UI Symbol";
 			}
 			.container {
-				background-color: #dddfe4;
+				background-color: #efefef;
 				padding: 10px;
 				display: flex;
 				flex-direction: column;
 				gap: 10px;
-				align-items: flex-start;
+				align-items: center;
+				justify-content: center;
+			}
+			.container .item {
+				display: flex;
+				gap: 10px;
 			}
 		</style>
 	</head>
 	<body>
 		Hello World
 		<div class="container">
-			<button tpn tpn-btn>PushButton</button>
-			<button tpn tpn-btn>PushButton</button>
+			<div class="item">
+				<button tpn tpn-btn>PushButton</button>
+				<button tpn tpn-btn filled-btn>PushButton</button>
+				<button tpn tpn-btn tiny-btn>PushButton</button>
+				<button tpn tpn-btn filled-btn tiny-btn>PushButton</button>
+			</div>
+			<div class="item"></div>
 		</div>
 		<script src="../src/twpisn.js"></script>
 	</body>
