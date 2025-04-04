@@ -159,12 +159,14 @@ document.querySelectorAll("text-field").forEach((a) => {
 			return a.getAttribute("id");
 		}
 	};
-	a.innerHTML = `<input style="display: block; width: ${getWidth()}px" class="${getclass()}" id="${getid()}" type=${a.getAttribute(
+	a.innerHTML = `<div class="in" style="outline: 1px solid ${
+		ptnColors.seco.border
+	}; border-radius: 3px; outline-offset: -1px; box-shadow: 0.5px 0.5px 0.5px 0 rgba(0, 0, 0, 0.25); display: flex; align-items: center;"><input style="display: block; width: ${getWidth()}px" class="${getclass()}" id="${getid()}" type=${a.getAttribute(
 		"type"
-	)} placeholder="${a.getAttribute("placeholder")}" />`;
+	)} placeholder="${a.getAttribute("placeholder")}" /></div>`;
 	inp = a.querySelector("input");
 	const fieldStyle = {
-		border: `1px solid ${ptnColors.seco.border}`,
+		border: `none`,
 		borderRadius: "3px",
 		padding: `${ptnSizes.primPadding.tb - 3.5}px ${
 			ptnSizes.primPadding.lr + 2
@@ -173,7 +175,6 @@ document.querySelectorAll("text-field").forEach((a) => {
 		width: `${getWidth()}px`,
 		outline: "1px solid rgba(0, 0, 0, 0.1)",
 		outlineOffset: "-2px",
-		boxShadow: "0.5px 0.5px 0.5px 0 rgba(0, 0, 0, 0.25)",
 	};
 	applyStyle(inp, fieldStyle);
 	if (a.getAttribute("tpn-label") != null) {
