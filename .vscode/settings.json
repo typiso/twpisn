@@ -3,7 +3,7 @@
 	"editor.formatOnSave": true,
 	"editor.wordWrap": "on",
 	"editor.wordWrapColumn": 200,
-	"editor.lineHeight": 30,
+	"editor.lineHeight": 25,
 	"editor.mouseWheelZoom": true,
 	"editor.fontLigatures": true,
 	"terminal.integrated.sendKeybindingsToShell": true,

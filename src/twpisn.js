@@ -12,10 +12,12 @@ var ptnColors = {
 		bright: "#9AB9D8",
 		dark: "#6C94BB",
 		darker: "#678DB2",
+		border: "#366088",
 	},
 	seco: {
 		bright: "#E3E5EB",
 		dark: "#C9CBD0",
+		border: "#8F8F8F",
 	},
 	back: {
 		bright: "#efefef",
@@ -29,20 +31,21 @@ var ptnSizes = {
 	},
 };
 
+let applyStyle = (element, styleObj) => {
+	Object.assign(element.style, styleObj);
+};
+
 document.querySelectorAll("button").forEach((a) => {
-	let applyStyle = (element, styleObj) => {
-		Object.assign(element.style, styleObj);
-	};
 	var text = a.innerHTML;
 	a.innerHTML = "<div><span>" + text + "</span></div>";
 	var bor = a.querySelector("span");
 	var cont = a.querySelector("div");
 	const normalStyleA = {
-		borderColor: "#8F8F8F",
+		borderColor: ptnColors.seco.border,
 		outlineColor: "rgba(255, 255, 255, 0.4)",
 	};
 	const filledStyleA = {
-		borderColor: "#366088",
+		borderColor: ptnColors.prim.border,
 		outlineColor: "rgba(0, 0, 0, 0.1)",
 	};
 	const normalStyle = {
@@ -72,7 +75,7 @@ document.querySelectorAll("button").forEach((a) => {
 		bor.style.padding = "0 2px";
 		bor.style.outlineOffset = "-2px";
 		bor.style.textShadow = "0 -0.5px 0 rgba(0, 0, 0, 0.5)";
-		cont.style.padding = `${ptnSizes.primPadding.tb - 2}px ${
+		cont.style.padding = `${ptnSizes.primPadding.tb - 2.5}px ${
 			ptnSizes.primPadding.lr
 		}px`;
 		a.style.cursor = "pointer";
@@ -129,5 +132,65 @@ document.querySelectorAll("button").forEach((a) => {
 		cont.style.padding = `${ptnSizes.primPadding.tb}px ${
 			ptnSizes.primPadding.lr + 2
 		}px`;
+	}
+});
+
+document.querySelectorAll("text-field").forEach((a) => {
+	a.style.display = "block";
+	let getWidth = () => {
+		t = a.getAttribute("w");
+		if (t == null) {
+			return 100;
+		} else {
+			return parseFloat(t);
+		}
+	};
+	let getclass = () => {
+		if (a.getAttribute("class") == null || a.getAttribute("class") == "") {
+			return "";
+		} else {
+			return a.getAttribute("class");
+		}
+	};
+	let getid = () => {
+		if (a.getAttribute("id") == null || a.getAttribute("id") == "") {
+			return "";
+		} else {
+			return a.getAttribute("id");
+		}
+	};
+	a.innerHTML = `<input style="display: block; width: ${getWidth()}px" class="${getclass()}" id="${getid()}" type=${a.getAttribute(
+		"type"
+	)} placeholder="${a.getAttribute("placeholder")}" />`;
+	inp = a.querySelector("input");
+	const fieldStyle = {
+		border: `1px solid ${ptnColors.seco.border}`,
+		borderRadius: "3px",
+		padding: `${ptnSizes.primPadding.tb - 3.5}px ${
+			ptnSizes.primPadding.lr + 2
+		}px`,
+		height: "20px",
+		width: `${getWidth()}px`,
+		outline: "1px solid rgba(0, 0, 0, 0.1)",
+		outlineOffset: "-2px",
+		boxShadow: "0.5px 0.5px 0.5px 0 rgba(0, 0, 0, 0.25)",
+	};
+	applyStyle(inp, fieldStyle);
+	if (a.getAttribute("tpn-label") != null) {
+		const aStyle = {
+			display: "flex",
+			flexDirection: "column",
+			gap: `${ptnSizes.primPadding.tb - 3.5}px`,
+		};
+		applyStyle(a, aStyle);
+		const labelStyle = {
+			display: "block",
+			fontSize: "13px",
+		};
+		console.log(a.getAttribute("tpn-label"));
+		label = document.createElement("span");
+		label.innerText = a.getAttribute("tpn-label");
+		applyStyle(label, labelStyle);
+		a.prepend(label);
 	}
 });
