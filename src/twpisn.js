@@ -1,7 +1,7 @@
 elms = document.getElementsByTagName("*");
 for (var i = 0; i < elms.length; i++) {
 	elm = elms[i];
-	elm.style.fontSize = "11pt";
+	elm.style.fontSize = "14px";
 	if (elm.hasAttribute("tpn")) {
 		elm.style.display = "block";
 	}
@@ -70,12 +70,12 @@ document.querySelectorAll("button").forEach((a) => {
 	};
 	if (a.hasAttribute("tpn-btn")) {
 		bor.style.padding = "0 2px";
+		bor.style.outlineOffset = "-2px";
+		bor.style.textShadow = "0 -0.5px 0 rgba(0, 0, 0, 0.5)";
 		cont.style.padding = `${ptnSizes.primPadding.tb - 2}px ${
 			ptnSizes.primPadding.lr
 		}px`;
 		a.style.cursor = "pointer";
-		a.style.backgroundColor = "transparent";
-		a.style.backgroundRepeat = "repeat";
 		a.style.overflow = "hidden";
 		a.style.borderRadius = "3px";
 		a.style.fontWeight = 400;
@@ -121,8 +121,13 @@ document.querySelectorAll("button").forEach((a) => {
 		});
 	}
 	if (a.hasAttribute("tiny-btn")) {
-		cont.style.padding = 0;
-		cont.style.padding = `0 ${ptnSizes.primPadding.lr}px`;
-		a.style.fontSize = "10pt";
+		cont.style.padding = `1px ${ptnSizes.primPadding.lr + 1}px`;
+		a.style.fontSize = "13px";
+	}
+	if (a.hasAttribute("big-btn")) {
+		a.style.fontSize = "15px";
+		cont.style.padding = `${ptnSizes.primPadding.tb}px ${
+			ptnSizes.primPadding.lr + 2
+		}px`;
 	}
 });
