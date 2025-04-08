@@ -182,6 +182,7 @@ document.querySelectorAll("text-field").forEach((a) => {
 			display: "flex",
 			flexDirection: "column",
 			gap: `${ptnSizes.primPadding.tb - 3.5}px`,
+			backgroundColor: "transparent",
 		};
 		applyStyle(a, aStyle);
 		const labelStyle = {
@@ -193,5 +194,11 @@ document.querySelectorAll("text-field").forEach((a) => {
 		label.innerText = a.getAttribute("tpn-label");
 		applyStyle(label, labelStyle);
 		a.prepend(label);
+		a.addEventListener("mouseover", () => {
+			a.style.backgroundColor = "red";
+		});
+		a.addEventListener("mouseleave", () => {
+			applyStyle(a, aStyle);
+		});
 	}
 });
