@@ -9,6 +9,7 @@ for (var i = 0; i < elms.length; i++) {
 
 var ptnColors = {
 	prim: {
+		brighter: "#bfd3e6",
 		bright: "#9AB9D8",
 		dark: "#6C94BB",
 		darker: "#678DB2",
@@ -137,31 +138,9 @@ document.querySelectorAll("button").forEach((a) => {
 
 document.querySelectorAll("text-field").forEach((a) => {
 	a.style.display = "block";
-	let getWidth = () => {
-		t = a.getAttribute("w");
-		if (t == null) {
-			return 100;
-		} else {
-			return parseFloat(t);
-		}
-	};
-	let getclass = () => {
-		if (a.getAttribute("class") == null || a.getAttribute("class") == "") {
-			return "";
-		} else {
-			return a.getAttribute("class");
-		}
-	};
-	let getid = () => {
-		if (a.getAttribute("id") == null || a.getAttribute("id") == "") {
-			return "";
-		} else {
-			return a.getAttribute("id");
-		}
-	};
 	a.innerHTML = `<div class="in" style="outline: 1px solid ${
 		ptnColors.seco.border
-	}; border-radius: 3px; outline-offset: -1px; box-shadow: 0.5px 0.5px 0.5px 0 rgba(0, 0, 0, 0.25); display: flex; align-items: center;"><input style="display: block; width: ${getWidth()}px" class="${getclass()}" id="${getid()}" type=${a.getAttribute(
+	}; border-radius: 3px; outline-offset: -1px; box-shadow: 0.5px 0.5px 0.5px 0 rgba(0, 0, 0, 0.25); display: flex; align-items: center;"><input style="display: block; width: ${getWidth()}px" type=${a.getAttribute(
 		"type"
 	)} placeholder="${a.getAttribute("placeholder")}" /></div>`;
 	inp = a.querySelector("input");
@@ -188,17 +167,137 @@ document.querySelectorAll("text-field").forEach((a) => {
 		const labelStyle = {
 			display: "block",
 			fontSize: "13px",
+			outline: "none",
+			width: "fit-content",
 		};
-		console.log(a.getAttribute("tpn-label"));
+		const labelFocus = {
+			outline: "1px dotted #000000",
+		};
 		label = document.createElement("span");
 		label.innerText = a.getAttribute("tpn-label");
 		applyStyle(label, labelStyle);
 		a.prepend(label);
-		a.addEventListener("mouseover", () => {
-			a.style.backgroundColor = "red";
+	}
+	inp.addEventListener("click", () => {
+		applyStyle(label, labelFocus);
+	});
+	inp.addEventListener("blur", () => {
+		applyStyle(a, aStyle);
+		applyStyle(label, labelStyle);
+	});
+});
+
+document.querySelectorAll("[tpn-field]").forEach((a) => {
+	const wrapperDiv = document.createElement("div");
+	const outerDiv = document.createElement("div");
+	a.parentNode.insertBefore(wrapperDiv, a);
+	wrapperDiv.appendChild(a);
+	wrapperDiv.parentNode.insertBefore(outerDiv, wrapperDiv);
+	outerDiv.appendChild(wrapperDiv);
+	const getWidth = () => {
+		if (a.getAttribute("w") != null) {
+			return parseFloat(a.getAttribute("w"));
+		} else {
+			return 100;
+		}
+	};
+	const fieldStyle = {
+		border: `none`,
+		borderRadius: "3px",
+		padding: `${ptnSizes.primPadding.tb - 3.5}px ${
+			ptnSizes.primPadding.lr + 2
+		}px`,
+		height: "20px",
+		width: `${getWidth()}px`,
+		outline: "1px solid rgba(0, 0, 0, 0.1)",
+		outlineOffset: "-2px",
+		backgroundColor: "#ffffff",
+	};
+	const divStyle = {
+		outline: `1px solid ${ptnColors.seco.border}`,
+		borderRadius: "3px",
+		outlineOffset: "-1px",
+		boxShadow: "0.5px 0.5px 0.5px rgba(0, 0, 0, 0.25)",
+		display: "flex",
+		alignItems: "center",
+	};
+	const outerStyle = {
+		outline: "none",
+		padding: `${ptnSizes.primPadding.tb - 4}px ${
+			ptnSizes.primPadding.lr - 1
+		}px ${ptnSizes.primPadding.tb - 1}px ${ptnSizes.primPadding.lr - 1}px`,
+	};
+	applyStyle(outerDiv, outerStyle);
+	applyStyle(a, fieldStyle);
+	applyStyle(wrapperDiv, divStyle);
+	const allFocus = {
+		outlineColor: ptnColors.prim.bright,
+	};
+	const wrapperFocus = {
+		outlineColor: ptnColors.prim.border,
+	};
+	if (a.getAttribute("tpn-label") != null) {
+		const aStyle = {
+			display: "flex",
+			flexDirection: "column",
+			gap: `${ptnSizes.primPadding.tb - 3.5}px`,
+			backgroundColor: "transparent",
+		};
+		const labelStyle = {
+			display: "block",
+			fontSize: "13px",
+			outline: "none",
+			width: "fit-content",
+			fontWeight: 400,
+		};
+		const outerFocus = {
+			outline: "1px dotted #000000",
+		};
+		const labelFocus = {
+			fontWeight: 500,
+		};
+		applyStyle(outerDiv, aStyle);
+		label = document.createElement("span");
+		label.innerText = a.getAttribute("tpn-label");
+		outerDiv.prepend(label);
+		applyStyle(label, labelStyle);
+		a.addEventListener("click", () => {
+			labelElm = outerDiv.querySelector("span");
+			applyStyle(labelElm, labelFocus);
 		});
-		a.addEventListener("mouseleave", () => {
-			applyStyle(a, aStyle);
+		a.addEventListener("blur", () => {
+			labelElm = outerDiv.querySelector("span");
+			applyStyle(labelElm, labelStyle);
+		});
+		a.addEventListener("click", () => {
+			applyStyle(a, allFocus);
+			applyStyle(wrapperDiv, wrapperFocus);
+			applyStyle(outerDiv, outerFocus);
+		});
+		a.addEventListener("blur", () => {
+			applyStyle(a, fieldStyle);
+			applyStyle(wrapperDiv, divStyle);
+			applyStyle(outerDiv, outerStyle);
+		});
+	}
+	if (a.getAttribute("standout") != null) {
+		const outerStandout = {
+			backgroundColor: ptnColors.prim.brighter,
+			borderRadius: "3px",
+		};
+		const labelStandout = {
+			color: ptnColors.prim.border,
+			fontWeight: 500,
+		};
+		labelElm = outerDiv.querySelector("span");
+		applyStyle(outerDiv, outerStandout);
+		applyStyle(a, allFocus);
+		applyStyle(wrapperDiv, wrapperFocus);
+		applyStyle(labelElm, labelStandout);
+		a.addEventListener("blur", () => {
+			applyStyle(a, allFocus);
+			applyStyle(wrapperDiv, wrapperFocus);
+			applyStyle(labelElm, labelStandout);
 		});
 	}
 });

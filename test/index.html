@@ -39,17 +39,27 @@
 				<button tpn tpn-btn filled-btn big-btn>PushButton</button>
 			</div>
 			<div class="item">
-				<text-field
+				<input
 					type="text"
-					w="250"
+					w="200"
 					placeholder="TextField"
-					tpn-label="abc"
-				></text-field>
-				<text-field
+					tpn-label="Username"
+					tpn-field
+				/>
+				<input
 					type="password"
-					tpn-label="PWLabel"
+					tpn-label="Password"
 					placeholder="PwField"
-				></text-field>
+					tpn-field
+				/>
+				<input
+					type="text"
+					w="150"
+					placeholder="TextField"
+					tpn-label="This field is stand out"
+					tpn-field
+					standout="This is standout message"
+				/>
 			</div>
 		</div>
 		<script src="../src/twpisn.js"></script>
