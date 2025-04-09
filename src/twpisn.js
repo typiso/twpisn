@@ -1,7 +1,7 @@
 elms = document.getElementsByTagName("*");
 for (var i = 0; i < elms.length; i++) {
 	elm = elms[i];
-	elm.style.fontSize = "14px";
+	// elm.style.fontSize = "14px";
 	if (elm.hasAttribute("tpn")) {
 		elm.style.display = "block";
 	}
@@ -89,6 +89,7 @@ document.querySelectorAll("button").forEach((a) => {
 		a.style.outline = "1px solid";
 		a.style.outlineOffset = "-2px";
 		a.style.height = "fit-content";
+		a.style.fontSize = "13px";
 		applyStyle(cont, normalStyle);
 		applyStyle(a, normalStyleA);
 		a.addEventListener("mouseover", () => {
@@ -187,9 +188,71 @@ document.querySelectorAll("text-field").forEach((a) => {
 	});
 });
 
+const tpnF = {
+	standout: (elm, text = "default text") => {
+		const standoutStyle = {
+			fontSize: "11px",
+		};
+		const outerDiv = elm.parentNode.parentNode;
+		const wrapperDiv = elm.parentNode;
+		const message = document.createElement("span");
+		message.classList.add("tpn-message");
+		message.innerText = text;
+		outerDiv.appendChild(message);
+		applyStyle(message, standoutStyle);
+		const outerStandout = {
+			backgroundColor: ptnColors.prim.brighter,
+			borderRadius: "3px",
+		};
+		const labelStandout = {
+			color: ptnColors.prim.border,
+			fontWeight: 500,
+		};
+		const allFocus = {
+			outlineColor: ptnColors.prim.bright,
+		};
+		const wrapperFocus = {
+			outlineColor: ptnColors.prim.border,
+		};
+		labelElm = outerDiv.querySelector("span");
+		applyStyle(outerDiv, outerStandout);
+		applyStyle(elm, allFocus);
+		applyStyle(wrapperDiv, wrapperFocus);
+		applyStyle(labelElm, labelStandout);
+		elm.addEventListener("blur", () => {
+			applyStyle(elm, allFocus);
+			applyStyle(wrapperDiv, wrapperFocus);
+			applyStyle(labelElm, labelStandout);
+		});
+		elm.addEventListener("blur", () => {
+			const me = outerDiv.querySelectorAll(".tpn-message");
+			if (me.length == 2) {
+				const meR = outerDiv.querySelector(".tpn-message");
+				meR.remove();
+			}
+		});
+	},
+};
+
 document.querySelectorAll("[tpn-field]").forEach((a) => {
+	const textStyle = { fontSize: "12px" };
+	const pwStyle = { fontSize: "25px" };
+	let plc = a.getAttribute("placeholder");
+	if (a.getAttribute("type") == "password") {
+		applyStyle(a, textStyle);
+		a.addEventListener("click", () => {
+			applyStyle(a, pwStyle);
+		});
+		a.addEventListener("blur", () => {
+			applyStyle(a, textStyle);
+		});
+	} else {
+		applyStyle(a, textStyle);
+	}
 	const wrapperDiv = document.createElement("div");
 	const outerDiv = document.createElement("div");
+	wrapperDiv.classList.add("tpn-wrapper");
+	outerDiv.classList.add("tpn-outer");
 	a.parentNode.insertBefore(wrapperDiv, a);
 	wrapperDiv.appendChild(a);
 	wrapperDiv.parentNode.insertBefore(outerDiv, wrapperDiv);
@@ -209,7 +272,7 @@ document.querySelectorAll("[tpn-field]").forEach((a) => {
 		}px`,
 		height: "20px",
 		width: `${getWidth()}px`,
-		outline: "1px solid rgba(0, 0, 0, 0.1)",
+		outline: "2px solid rgba(0, 0, 0, 0.1)",
 		outlineOffset: "-2px",
 		backgroundColor: "#ffffff",
 	};
@@ -226,6 +289,7 @@ document.querySelectorAll("[tpn-field]").forEach((a) => {
 		padding: `${ptnSizes.primPadding.tb - 4}px ${
 			ptnSizes.primPadding.lr - 1
 		}px ${ptnSizes.primPadding.tb - 1}px ${ptnSizes.primPadding.lr - 1}px`,
+		height: "fit-content",
 	};
 	applyStyle(outerDiv, outerStyle);
 	applyStyle(a, fieldStyle);
@@ -236,6 +300,9 @@ document.querySelectorAll("[tpn-field]").forEach((a) => {
 	const wrapperFocus = {
 		outlineColor: ptnColors.prim.border,
 	};
+	const outerFocus = {
+		outline: "1px dotted #000000",
+	};
 	if (a.getAttribute("tpn-label") != null) {
 		const aStyle = {
 			display: "flex",
@@ -245,13 +312,10 @@ document.querySelectorAll("[tpn-field]").forEach((a) => {
 		};
 		const labelStyle = {
 			display: "block",
-			fontSize: "13px",
+			fontSize: "12px",
 			outline: "none",
 			width: "fit-content",
 			fontWeight: 400,
-		};
-		const outerFocus = {
-			outline: "1px dotted #000000",
 		};
 		const labelFocus = {
 			fontWeight: 500,
@@ -269,35 +333,20 @@ document.querySelectorAll("[tpn-field]").forEach((a) => {
 			labelElm = outerDiv.querySelector("span");
 			applyStyle(labelElm, labelStyle);
 		});
-		a.addEventListener("click", () => {
-			applyStyle(a, allFocus);
-			applyStyle(wrapperDiv, wrapperFocus);
-			applyStyle(outerDiv, outerFocus);
-		});
-		a.addEventListener("blur", () => {
-			applyStyle(a, fieldStyle);
-			applyStyle(wrapperDiv, divStyle);
-			applyStyle(outerDiv, outerStyle);
-		});
 	}
-	if (a.getAttribute("standout") != null) {
-		const outerStandout = {
-			backgroundColor: ptnColors.prim.brighter,
-			borderRadius: "3px",
-		};
-		const labelStandout = {
-			color: ptnColors.prim.border,
-			fontWeight: 500,
-		};
-		labelElm = outerDiv.querySelector("span");
-		applyStyle(outerDiv, outerStandout);
+	a.addEventListener("click", () => {
 		applyStyle(a, allFocus);
 		applyStyle(wrapperDiv, wrapperFocus);
-		applyStyle(labelElm, labelStandout);
-		a.addEventListener("blur", () => {
-			applyStyle(a, allFocus);
-			applyStyle(wrapperDiv, wrapperFocus);
-			applyStyle(labelElm, labelStandout);
-		});
+		applyStyle(outerDiv, outerFocus);
+		a.setAttribute("placeholder", "");
+	});
+	a.addEventListener("blur", () => {
+		applyStyle(a, fieldStyle);
+		applyStyle(wrapperDiv, divStyle);
+		applyStyle(outerDiv, outerStyle);
+		a.setAttribute("placeholder", plc);
+	});
+	if (a.getAttribute("standout") != null) {
+		tpnF.standout(a, a.getAttribute("standout"));
 	}
 });
