@@ -239,6 +239,7 @@ document.querySelectorAll("[tpn-field]").forEach((a) => {
 	const pwStyle = { fontSize: "25px" };
 	let plc = a.getAttribute("placeholder");
 	if (a.getAttribute("type") == "password") {
+		a.style.letterSpacing = "0.25px";
 		applyStyle(a, textStyle);
 		a.addEventListener("click", () => {
 			applyStyle(a, pwStyle);
