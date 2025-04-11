@@ -74,7 +74,6 @@ document.querySelectorAll("button").forEach((a) => {
 	};
 	if (a.hasAttribute("tpn-btn")) {
 		bor.style.padding = "0 2px";
-		bor.style.outlineOffset = "-2px";
 		bor.style.textShadow = "0 -0.5px 0 rgba(0, 0, 0, 0.5)";
 		cont.style.padding = `${ptnSizes.primPadding.tb - 2.5}px ${
 			ptnSizes.primPadding.lr
@@ -188,6 +187,71 @@ document.querySelectorAll("text-field").forEach((a) => {
 	});
 });
 
+const allFocus = {
+	outlineColor: ptnColors.prim.bright,
+};
+const wrapperFocus = {
+	outlineColor: ptnColors.prim.border,
+};
+const outerFocus = {
+	outline: "1px dotted #000000",
+};
+const fieldStyle = {
+	border: `none`,
+	borderRadius: "3px",
+	padding: `${ptnSizes.primPadding.tb - 3.5}px ${
+		ptnSizes.primPadding.lr + 2
+	}px`,
+	height: "20px",
+	outline: "2px solid rgba(0, 0, 0, 0.1)",
+	outlineOffset: "-2px",
+	backgroundColor: "#ffffff",
+};
+const divStyle = {
+	outline: `1px solid ${ptnColors.seco.border}`,
+	borderRadius: "3px",
+	outlineOffset: "-1px",
+	boxShadow: "0.5px 0.5px 0.5px rgba(0, 0, 0, 0.25)",
+	display: "flex",
+	alignItems: "center",
+	width: "fit-content",
+};
+const outerStyle = {
+	outline: "none",
+	padding: `${ptnSizes.primPadding.tb - 4}px ${
+		ptnSizes.primPadding.lr - 1
+	}px ${ptnSizes.primPadding.tb - 1}px ${ptnSizes.primPadding.lr - 1}px`,
+	height: "fit-content",
+	width: "fit-content",
+	backgroundColor: "transparent",
+};
+
+const aStyle = {
+	display: "flex",
+	flexDirection: "column",
+	gap: `${ptnSizes.primPadding.tb - 3.5}px`,
+	backgroundColor: "transparent",
+};
+const labelStyle = {
+	display: "block",
+	fontSize: "12px",
+	outline: "none",
+	width: "fit-content",
+	fontWeight: 400,
+	color: "#000000",
+};
+const labelFocus = {
+	fontWeight: 500,
+};
+const outerStandout = {
+	backgroundColor: ptnColors.prim.brighter,
+	borderRadius: "3px",
+};
+const labelStandout = {
+	color: ptnColors.prim.border,
+	fontWeight: 500,
+};
+
 const tpnF = {
 	standout: (elm, text = "default text") => {
 		const standoutStyle = {
@@ -200,20 +264,6 @@ const tpnF = {
 		message.innerText = text;
 		outerDiv.appendChild(message);
 		applyStyle(message, standoutStyle);
-		const outerStandout = {
-			backgroundColor: ptnColors.prim.brighter,
-			borderRadius: "3px",
-		};
-		const labelStandout = {
-			color: ptnColors.prim.border,
-			fontWeight: 500,
-		};
-		const allFocus = {
-			outlineColor: ptnColors.prim.bright,
-		};
-		const wrapperFocus = {
-			outlineColor: ptnColors.prim.border,
-		};
 		labelElm = outerDiv.querySelector("span");
 		applyStyle(outerDiv, outerStandout);
 		applyStyle(elm, allFocus);
@@ -232,24 +282,24 @@ const tpnF = {
 			}
 		});
 	},
+	rmstandout: (elm) => {
+		const outerDiv = elm.parentNode.parentNode;
+		const wrapperDiv = elm.parentNode;
+		const message = outerDiv.querySelector(".tpn-message");
+		const label = outerDiv.querySelector("span");
+		applyStyle(elm, fieldStyle);
+		applyStyle(outerDiv, outerStyle);
+		if (message != null) {
+			message.remove();
+		}
+		console.log(label);
+		applyStyle(label, labelStyle);
+	},
 };
 
 document.querySelectorAll("[tpn-field]").forEach((a) => {
 	const textStyle = { fontSize: "12px" };
-	const pwStyle = { fontSize: "25px" };
 	let plc = a.getAttribute("placeholder");
-	if (a.getAttribute("type") == "password") {
-		a.style.letterSpacing = "0.25px";
-		applyStyle(a, textStyle);
-		a.addEventListener("click", () => {
-			applyStyle(a, pwStyle);
-		});
-		a.addEventListener("blur", () => {
-			applyStyle(a, textStyle);
-		});
-	} else {
-		applyStyle(a, textStyle);
-	}
 	const wrapperDiv = document.createElement("div");
 	const outerDiv = document.createElement("div");
 	wrapperDiv.classList.add("tpn-wrapper");
@@ -265,62 +315,11 @@ document.querySelectorAll("[tpn-field]").forEach((a) => {
 			return 100;
 		}
 	};
-	const fieldStyle = {
-		border: `none`,
-		borderRadius: "3px",
-		padding: `${ptnSizes.primPadding.tb - 3.5}px ${
-			ptnSizes.primPadding.lr + 2
-		}px`,
-		height: "20px",
-		width: `${getWidth()}px`,
-		outline: "2px solid rgba(0, 0, 0, 0.1)",
-		outlineOffset: "-2px",
-		backgroundColor: "#ffffff",
-	};
-	const divStyle = {
-		outline: `1px solid ${ptnColors.seco.border}`,
-		borderRadius: "3px",
-		outlineOffset: "-1px",
-		boxShadow: "0.5px 0.5px 0.5px rgba(0, 0, 0, 0.25)",
-		display: "flex",
-		alignItems: "center",
-	};
-	const outerStyle = {
-		outline: "none",
-		padding: `${ptnSizes.primPadding.tb - 4}px ${
-			ptnSizes.primPadding.lr - 1
-		}px ${ptnSizes.primPadding.tb - 1}px ${ptnSizes.primPadding.lr - 1}px`,
-		height: "fit-content",
-	};
+	a.style.width = `${getWidth()}px`;
 	applyStyle(outerDiv, outerStyle);
 	applyStyle(a, fieldStyle);
 	applyStyle(wrapperDiv, divStyle);
-	const allFocus = {
-		outlineColor: ptnColors.prim.bright,
-	};
-	const wrapperFocus = {
-		outlineColor: ptnColors.prim.border,
-	};
-	const outerFocus = {
-		outline: "1px dotted #000000",
-	};
 	if (a.getAttribute("tpn-label") != null) {
-		const aStyle = {
-			display: "flex",
-			flexDirection: "column",
-			gap: `${ptnSizes.primPadding.tb - 3.5}px`,
-			backgroundColor: "transparent",
-		};
-		const labelStyle = {
-			display: "block",
-			fontSize: "12px",
-			outline: "none",
-			width: "fit-content",
-			fontWeight: 400,
-		};
-		const labelFocus = {
-			fontWeight: 500,
-		};
 		applyStyle(outerDiv, aStyle);
 		label = document.createElement("span");
 		label.innerText = a.getAttribute("tpn-label");
