@@ -206,6 +206,7 @@ const fieldStyle = {
 	outline: "2px solid rgba(0, 0, 0, 0.1)",
 	outlineOffset: "-2px",
 	backgroundColor: "#ffffff",
+	fontSize: "12px",
 };
 const divStyle = {
 	outline: `1px solid ${ptnColors.seco.border}`,
@@ -298,7 +299,6 @@ const tpnF = {
 };
 
 document.querySelectorAll("[tpn-field]").forEach((a) => {
-	const textStyle = { fontSize: "12px" };
 	let plc = a.getAttribute("placeholder");
 	const wrapperDiv = document.createElement("div");
 	const outerDiv = document.createElement("div");
